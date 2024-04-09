@@ -6,37 +6,34 @@ public class Bug { // will need to add "implements Contract"
 
     String name;
     ArrayList<String> bag = new ArrayList<String>();
-    int x = 30;
-    int y = 30;
+    int paramX = 30;
+    int paramY = 30;
+    Number size = 10;
 
+
+    public Bug(String name, int x, int y, Number size){
+        
+        this.name = name;
+        this.paramX = x;
+        this.paramY = y;
+        this.size = size;
+        
+        System.out.println("Your bug's name is " + this.name + " and they're " + this.size + " centimeters tall!");
+        System.out.println("They can fly " + this.paramX + " centimeters to the side and " + this.paramY + " centimeters vertically at a time.\n");
+    }
 
     public Bug(String name){
         
         this.name = name;
-        System.out.println("Your bug's name is " + this.name + "\n");
-
-        // Scanner sc = new Scanner(System.in);
-        // System.out.println("What would you like your bug's name to be?");
-
-        // this.name = sc.nextLine();
-        // System.out.println("Perfect! Your bug's name is " + name);
-
-        // sc.close();
+        
+        System.out.println("Your bug's name is " + this.name + " and they're " + this.size + " centimeters tall!");
+        System.out.println("They can fly " + this.paramX + " centimeters to the side and " + this.paramY + " centimeters vertically at a time.\n");
     }
 
     public void grab(String item){
 
         System.out.println("You have now grabbed " + item + "\n");
         bag.add(item);
-
-        // Scanner sc2 = new Scanner(System.in);
-        // System.out.println("What would you like to grab?");
-
-        // item = sc2.nextLine();
-        // System.out.println("You have grabbed " + item);
-    
-        // sc2.close();
-
     }
 
     public String drop(String item){
@@ -59,7 +56,6 @@ public class Bug { // will need to add "implements Contract"
         System.out.println("Ah, a " + color + " " + item + ". How interesting!\n");
 
         sc.close();
-
     }
 
     public void use(String item){
@@ -81,39 +77,56 @@ public class Bug { // will need to add "implements Contract"
         }  
     }
 
-    public void setParameters(int x, int y){
-
-        this.x = x;
-        this.y = y;
-
-        System.out.println("You've set the max that " + this.name + " can fly around \n");
-    }
-
     public boolean fly(int x, int y){
 
-        if (x <= this.x && y <= this.y){
-            
-            System.out.println(this.name + " has moved " + x + " to the side and " + y + " up/down.\n");
+        if (x <= this.paramX && y <= this.paramY){
+        
+            System.out.println(this.name + " has flown " + x + " centimeters to the side and " + y + " centimeters vertically.\n");
             return true;
         }else{
-            System.out.println("Oops! That's outside of the set paramters!");
+
+            System.out.println("Oops! That's outside of the set paramters! Try entering x and y less than " + paramX + " and " + paramY + "!\n");
             return false;
         }
     } 
 
-    // public Number shrink();
-    // public Number grow();
-    // public void rest();
-    // public void undo();
+    public Number shrink(){
+
+        this.size = this.size.intValue()/2;
+
+        System.out.println(this.name + " is now " + this.size + " centimeters tall.\n");
+        return this.size;
+    }
+
+    public Number grow(){
+
+        this.size = this.size.intValue()*2;
+
+        System.out.println(this.name + " is now " + this.size + " centimeters tall.\n");
+        return this.size;
+    }
+
+    public void rest(){
+
+        System.out.println("Ahhhh... " + this.name + " is taking a rest...");
+    }
+
+    public void undo(){
+
+
+        // make the position be 0,0
+    }
 
     public static void main(String[] args) {
-        Bug myBug = new Bug("Pria");
+
+        Bug myBug = new Bug("Pria", 20, 30, 5);
         myBug.grab("pear");
-        myBug.drop("pear");
+        myBug.grab("shoe");
+        // myBug.drop("pear");
         // myBug.examine("pear");
         myBug.use("pear");
         myBug.walk("up");
-
-   
+        myBug.fly(9,30);
+        myBug.rest();
     }
 }
