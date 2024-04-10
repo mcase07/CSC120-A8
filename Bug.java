@@ -1,16 +1,26 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
-
+/**
+ * 
+ */
 public class Bug implements Contract {
 
     String name;
     ArrayList<String> bag = new ArrayList<String>();
-    int paramX = 30;
-    int paramY = 30;
-    Number size = 10;
+    int paramX;
+    int paramY;
+    Number size;
     ArrayList<Integer> position = new ArrayList<Integer>(2);
 
+
+    /**
+     * Bug constructor sets parameters and sets position to [0,0]
+     * @param name name of the bug
+     * @param x how far left/right the bug can move at a time
+     * @param y how far up/down the bug can move at a time
+     * @param size size of the bug
+     */
     public Bug(String name, int x, int y, Number size){
         
         this.name = name;
@@ -28,29 +38,61 @@ public class Bug implements Contract {
         System.out.println("This little bug's postion in the air is: " + this.position + "\n");
     }
 
+    /**
+     * Default bug constructor that uses provided values
+     * @param name name of the bug
+     */
     public Bug(String name){
         
         this.name = name;
+        this.paramX = 30;
+        this.paramY = 20;
+        this.size = 10;
+        this.position.add(0);
+        this.position.add(0);
         
         System.out.println("Your bug's name is " + this.name + " and they're " + this.size + " centimeters tall!");
         System.out.println("They can fly " + this.paramX + " centimeters to the side and " + this.paramY + " centimeters vertically at a time.");
         System.out.println("This little bug's postion in the air is: " + this.position + "\n");
     }
 
+    /**
+     * Allows user's bug to grab an item and adds it to ArrayList bag
+     * @param item item the user wants to grab
+     */
     public void grab(String item){
 
         System.out.println("You have now grabbed " + item + "\n");
         bag.add(item);
     }
 
+    /**
+     * Allows user's bug to drop an item if it's in ArrayList bag
+     * @param item item the user wants to drop
+     */
     public String drop(String item){
 
-        String dropString = "You have now dropped " + item + "\n";
-        System.out.println(dropString);
+        if (bag.contains(item)) {
 
-        return dropString;
+            bag.remove(item);
+            String dropString = "You have now dropped " + item + "\n";
+
+            System.out.println(dropString);
+            return dropString;
+
+        }else {
+
+            String noDropString = "You can't drop " + item + " because it's not in the bag!\n";
+
+            System.out.println(noDropString);
+            return noDropString;
+        }
     }
     
+    /**
+     * Asks the user what color the item is
+     * @param item item the user wants to examine
+     */
     public void examine(String item){
 
         System.out.println("Let's take a closer look at this " + item);
@@ -64,11 +106,20 @@ public class Bug implements Contract {
         sc.close();
     }
 
+    /**
+     * Allows a user's bug to use an item
+     * @param item item the user wants to use
+     */
     public void use(String item){
 
         System.out.println("The " + item + " is in use. \n");
     }
 
+    /**
+     * Allows a user's bug to walk in set directions
+     * @param direction which direction the bug will move in
+     * @return boolean if the bug was able to move in a valid direction
+     */
     public boolean walk(String direction){
 
         System.out.println("Your bug, " + this.name + ", can walk left, right, forward, and backward. Please choose one of those directions to walk in.");
@@ -82,6 +133,12 @@ public class Bug implements Contract {
         }  
     }
 
+    /**
+     * Allows a user's bug to fly along x y coordinates
+     * @param x the amount left or right the user's bug will move
+     * @param y the amount up or down the user's bug will move
+     * @return boolean if the user's bug was able to fly within the set parameters
+     */
     public boolean fly(int x, int y){
 
         if (x <= this.paramX && y <= this.paramY){
@@ -103,6 +160,10 @@ public class Bug implements Contract {
         }
     } 
 
+    /**
+     * Shrink the size of the user's bug
+     * @return half the size the bug previously was
+     */
     public Number shrink(){
 
         this.size = this.size.intValue()/2;
@@ -111,6 +172,9 @@ public class Bug implements Contract {
         return this.size;
     }
 
+    /**
+     * Multiplies the size of the user's bug by two
+     */
     public Number grow(){
 
         this.size = this.size.intValue()*2;
@@ -119,6 +183,9 @@ public class Bug implements Contract {
         return this.size;
     }
 
+    /**
+     * Set's the user's bug's y-coordinate to 0 so that they're on the ground
+     */
     public void rest(){
 
         this.position.set(1,0);
@@ -128,6 +195,9 @@ public class Bug implements Contract {
         
     }
 
+    /**
+     * Resets the user's bug's coordinates to [0,0]
+     */
     public void undo(){
 
         this.position.set(0,0);
@@ -143,6 +213,7 @@ public class Bug implements Contract {
         myBug.grab("pear");
         myBug.grab("shoe");
         myBug.drop("pear");
+        myBug.drop("apple");
         myBug.examine("pear");
         myBug.use("pear");
         myBug.walk("up");
