@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * 
@@ -7,11 +8,11 @@ import java.util.ArrayList;
 public class Bug implements Contract {
 
     String name;
-    ArrayList<String> bag = new ArrayList<String>();
     int paramX;
     int paramY;
     Number size;
     ArrayList<Integer> position = new ArrayList<Integer>(2);
+    Hashtable<String, Boolean> bag;
 
 
     /**
@@ -29,6 +30,7 @@ public class Bug implements Contract {
         this.size = size;
         this.position.add(0);
         this.position.add(0);
+        this.bag = new Hashtable<String, Boolean>();
 
         System.out.println("----------------------------");
         System.out.println("Let's create a bug friend :)");
@@ -57,13 +59,13 @@ public class Bug implements Contract {
     }
 
     /**
-     * Allows user's bug to grab an item and adds it to ArrayList bag
+     * Allows user's bug to grab an item and adds it to ArrayList bag; boolean is set to false because it's not in use
      * @param item item the user wants to grab
      */
     public void grab(String item){
 
         System.out.println("You have now grabbed " + item + "\n");
-        bag.add(item);
+        this.bag.put(item, false);
     }
 
     /**
@@ -107,11 +109,12 @@ public class Bug implements Contract {
     }
 
     /**
-     * Allows a user's bug to use an item
+     * Allows a user's bug to use an item; changes boolean key to true
      * @param item item the user wants to use
      */
     public void use(String item){
 
+        this.bag.replace(item, true);
         System.out.println("The " + item + " is in use. \n");
     }
 
